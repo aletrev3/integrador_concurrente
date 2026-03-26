@@ -9,13 +9,18 @@ public class obstaculos implements Runnable {
         this.obs_consumo = obs_consumo;
     }
 
-private boolean activo = true;
+    private boolean activo = true;
 
-public void run() {
-    while (activo) {
-        System.out.println("Obstaculo " + obs_id + obs_tipo + " activo");
-
+    public void run() {
+        while (activo) {
+            System.out.println("Obstaculo " + obs_id + obs_tipo + " activo");
+            sistema.usarMemoria(obs_consumo);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
-}
 
 }

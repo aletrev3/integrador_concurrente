@@ -1,0 +1,21 @@
+public class obstaculos implements Runnable {
+    private int obs_id;
+    private String obs_tipo;
+    private int obs_consumo;
+
+    public obstaculos(int obs_id, String obs_tipo, int obs_consumo) {
+        this.obs_id = obs_id;
+        this.obs_tipo = obs_tipo;
+        this.obs_consumo = obs_consumo;
+    }
+
+private boolean activo = true;
+
+public void run() {
+    while (activo) {
+        System.out.println("Obstaculo " + obs_id + obs_tipo + " activo");
+
+    }
+}
+
+}

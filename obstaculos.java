@@ -21,6 +21,7 @@ public class obstaculos implements Runnable {
 
     public void detener() {
         activo = false;
+        sistema.liberarMemoria(obs_consumo);
     }
 
     public boolean estaActivo() {
@@ -28,7 +29,7 @@ public class obstaculos implements Runnable {
     }
 
     public void run() {
-        while (activo) {
+        while (activo && !sistema.isJuegoTerminado()) {
             System.out.println("Obstaculo " + obs_id + " " + obs_tipo + " activo");
             sistema.usarMemoria(obs_consumo);
 

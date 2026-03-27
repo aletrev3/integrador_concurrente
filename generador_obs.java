@@ -13,9 +13,13 @@ public class generador_obs {
         Random random = new Random();
         int contadorId = 1;
 
-        while (true) {
+        // PARADA DE EMERGENCIA: Verificar si el juego terminó
+        while (!sistema.isJuegoTerminado()) { 
             String tipo = tipos[random.nextInt(tipos.length)];
-            int consumo = random.nextInt(20) + 5;
+            
+            // Lógica senior: Las manifestaciones consumen mucho más estrés
+            int consumo = random.nextInt(15) + 5; // 5 a 20 default
+            if (tipo.equals("manifestacion")) consumo = 30; 
 
             obstaculos obs = new obstaculos(contadorId, tipo, consumo);
             mapa.put(contadorId, obs);
@@ -28,9 +32,11 @@ public class generador_obs {
             contadorId++;
 
             try {
-                Thread.sleep(5000);
+                // Generar obstáculo cada 4 segundos (un poco más rápido)
+                Thread.sleep(4000); 
             } catch (Exception e) {}
         }
+        System.out.println("Generador de obstáculos detenido.");
     }
 
     public void matarPorId(int id) {

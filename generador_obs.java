@@ -17,8 +17,8 @@ public class generador_obs {
         while (!sistema.isJuegoTerminado()) { 
             String tipo = tipos[random.nextInt(tipos.length)];
             
-            // Lógica senior: Las manifestaciones consumen mucho más estrés
-            int consumo = random.nextInt(15) + 5; // 5 a 20 default
+            
+            int consumo = random.nextInt(15) + 5; 
             if (tipo.equals("manifestacion")) consumo = 30; 
 
             obstaculos obs = new obstaculos(contadorId, tipo, consumo);

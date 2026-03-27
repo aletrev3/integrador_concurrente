@@ -1,8 +1,8 @@
-// Archivo: sistema.java
+
 import javax.swing.SwingUtilities;
 
 public class sistema {
-    // Bajamos la memoria inicial para que el juego sea más rápido/difícil
+    // Bajamos la memoria inicial
     public static int memoria = 100; 
     private static GameListener oyenteGame;
     private static boolean juegoTerminado = false;

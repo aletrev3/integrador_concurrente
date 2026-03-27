@@ -1,4 +1,4 @@
-// Archivo: Taxista.java
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
@@ -11,7 +11,7 @@ public class Taxista extends JPanel implements Runnable {
     private Random random = new Random();
 
     public Taxista() {
-        // Hacemos el panel transparente para que solo se vea el cuadrado
+        // panel transparente para que solo se vea el cuadrado
         setOpaque(false);
         setPreferredSize(new Dimension( TAMANO, TAMANO));
     }
@@ -23,7 +23,7 @@ public class Taxista extends JPanel implements Runnable {
         g.setColor(Color.YELLOW);
         g.fillRect(0, 0, TAMANO, TAMANO);
         
-        // Un borde negro para que resalte
+        
         g.setColor(Color.BLACK);
         g.drawRect(0, 0, TAMANO, TAMANO);
     }
@@ -40,11 +40,11 @@ public class Taxista extends JPanel implements Runnable {
             x += random.nextInt(11) - 5; // -5 a +5
             y += random.nextInt(11) - 5; // -5 a +5
 
-            // Limitar dentro de los bordes del área de juego (asumiendo 400x300 aprox)
+            // Limitar dentro de los bordes del área de juego 
             x = Math.max(10, Math.min(x, 350));
             y = Math.max(10, Math.min(y, 250));
 
-            // Actualizar la posición del componente en el contenedor padre
+            // Actualizar la posición del componente en el contenedor 
             SwingUtilities.invokeLater(() -> {
                 setLocation(x, y);
                 repaint(); // Forzar redibujado

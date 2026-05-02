@@ -39,11 +39,11 @@ public class obstaculos implements Runnable {
     }
 
     public void run() {
-        // Consumimos memoria SOLO UNA VEZ para no romper el contador de bloqueos del sistema
+        // Consumimos memoria 
         System.out.println("Obstaculo " + obs_id + " (" + obs_tipo + ") bloqueando el paso.");
         sistema.usarMemoria(obs_consumo);
 
-        // El hilo se queda vivo simulando el bloqueo e imprimiendo su estado
+        
         while (activo && !sistema.isJuegoTerminado()) {
             System.out.println("Obstaculo " + obs_id + " " + obs_tipo + " activo");
             try {

@@ -1,3 +1,4 @@
+package proyecto_integrador;
 
 import java.util.*;
 
@@ -14,7 +15,7 @@ public class generador_obs {
         Random random = new Random();
         int contadorId = 1;
 
-        // PARADA DE EMERGENCIA: Verificar si el juego terminó
+        
         while (!sistema.isJuegoTerminado()) {
             String tipo = tipos[random.nextInt(tipos.length)];
 
@@ -33,10 +34,10 @@ public class generador_obs {
             contadorId++;
 
             try {
-                // Generar obstáculo cada 4 segundos (un poco más rápido)
-                Thread.sleep(4000);
+                
+                Thread.sleep(2000);
             } catch (Exception e) {
-                e.printStackTrace(); // Se mantiene el rastreo de excepciones de tu código
+                e.printStackTrace(); 
             }
         }
         System.out.println("Generador de obstáculos detenido.");

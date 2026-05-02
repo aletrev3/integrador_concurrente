@@ -1,3 +1,5 @@
+
+
 public class obstaculos implements Runnable {
 
     private int obs_id;
@@ -32,18 +34,20 @@ public class obstaculos implements Runnable {
 
     public void detener() {
         activo = false;
-        System.out.print("Obtaculo " + obs_id + "estuvo activo durante " + tiempoActivo() + "ms");
-
-        sistema.liberarMemoria(obs_consumo);
+        System.out.println("Obstáculo " + obs_id + " estuvo activo durante " + tiempoActivo() + "ms");
+        sistema.liberarMemoria(obs_consumo); // Se recupera la memoria al morir
     }
 
     public void run() {
+        // Consumimos memoria SOLO UNA VEZ para no romper el contador de bloqueos del sistema
+        System.out.println("Obstaculo " + obs_id + " (" + obs_tipo + ") bloqueando el paso.");
+        sistema.usarMemoria(obs_consumo);
+
+        // El hilo se queda vivo simulando el bloqueo e imprimiendo su estado
         while (activo && !sistema.isJuegoTerminado()) {
             System.out.println("Obstaculo " + obs_id + " " + obs_tipo + " activo");
-            sistema.usarMemoria(obs_consumo);
-
             try {
-                Thread.sleep(5000);
+                Thread.sleep(5000); 
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

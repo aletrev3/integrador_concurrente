@@ -1,54 +1,56 @@
 
+
+import javax.swing.SwingUtilities;
+
+
 import javax.swing.SwingUtilities;
 
 public class sistema {
-    // Bajamos la memoria inicial
     public static int memoria = 100;
+    // NUEVO: Contador para saber si el taxista debe detenerse
+    public static int obstaculosActivos = 0; 
+    
     private static GameListener oyenteGame;
     private static boolean juegoTerminado = false;
 
-    // Método para suscribir la GUI
     public static void setGameListener(GameListener listener) {
         oyenteGame = listener;
     }
 
     public synchronized static void usarMemoria(int cantidad) {
-        if (juegoTerminado)
-            return; // No hacer nada si ya perdimos
+        if (juegoTerminado) return; 
 
         memoria -= cantidad;
+        obstaculosActivos++; // NUEVO: Registramos que hay un obstáculo bloqueando
         System.out.println("Memoria restante (Estrés): " + memoria);
 
-        // Si la memoria se agota, el taxista colapsa
         if (memoria <= 0) {
-            memoria = 0; // No mostrar valores negativos
+            memoria = 0; 
             juegoTerminado = true;
             System.out.println("DEADLOCK: El taxista ha colapsado por estrés.");
 
-            // Notificar a la GUI de forma segura en el hilo de Swing
             if (oyenteGame != null) {
-                SwingUtilities.invokeLater(
-                        () -> oyenteGame.onGameOver("El taxista ha sufrido un ataque de estrés. CDMX gana."));
+                SwingUtilities.invokeLater(() -> oyenteGame.onGameOver("El taxista colapsó por estrés. CDMX gana."));
             }
         }
     }
 
     public synchronized static void liberarMemoria(int cantidad) {
-
-        // No recuperar si el juego ya terminó
-        if (juegoTerminado)
-            return;
+        if (juegoTerminado) return;
 
         memoria += cantidad;
+        obstaculosActivos--; // N
 
-        // Evitar que supere el máximo
-        if (memoria > 100)
-            memoria = 100;
-
+        if (memoria > 100) memoria = 100;
         System.out.println("Memoria recuperada: " + memoria);
     }
 
     public synchronized static boolean isJuegoTerminado() {
         return juegoTerminado;
+    }
+    
+    // NUEVO: Método para que el taxista pregunte si puede avanzar
+    public synchronized static boolean hayBloqueo() {
+        return obstaculosActivos > 0;
     }
 }

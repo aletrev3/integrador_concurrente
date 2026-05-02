@@ -1,3 +1,4 @@
+
 import java.util.*;
 
 public class generador_obs {
@@ -35,7 +36,7 @@ public class generador_obs {
                 // Generar obstáculo cada 4 segundos (un poco más rápido)
                 Thread.sleep(4000);
             } catch (Exception e) {
-                e.printStackTrace();
+                e.printStackTrace(); // Se mantiene el rastreo de excepciones de tu código
             }
         }
         System.out.println("Generador de obstáculos detenido.");

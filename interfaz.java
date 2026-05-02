@@ -1,4 +1,4 @@
-// Archivo: interfaz.java
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
@@ -16,9 +16,12 @@ public class interfaz extends JFrame implements GameListener {
     private Taxista taxista;
     private Map<Integer, JButton> botones = new HashMap<>();
 
+    private JLabel labelEstadoTaxi;
+    private JLabel labelUltimoId;
+
     public interfaz() {
         setTitle("Simulador Taxista CDMX - Gestión de Estrés");
-        setSize(800, 600); // Ventana más grande
+        setSize(800, 600); 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         
         // Registrar esta ventana como oyente del sistema
@@ -31,18 +34,27 @@ public class interfaz extends JFrame implements GameListener {
         JPanel arriba = new JPanel();
         arriba.setBackground(Color.LIGHT_GRAY);
         campo = new JTextField(5);
-        matar = new JButton("Solucionar Problema (Matar ID)");
+        matar = new JButton("Solucionar Problema");
+        
         labelMemoria = new JLabel("Estrés Actual: 100 / 100");
         labelMemoria.setFont(new Font("Arial", Font.BOLD, 14));
         labelMemoria.setForeground(Color.BLUE);
+        
+        // NUEVOS LABELS PARA LA INTERFAZ
+        labelEstadoTaxi = new JLabel(" | Taxi: Avanzando");
+        labelEstadoTaxi.setFont(new Font("Arial", Font.BOLD, 14));
+        
+        labelUltimoId = new JLabel(" | Último ID: Ninguno");
 
         arriba.add(labelMemoria);
+        arriba.add(labelEstadoTaxi);
+        arriba.add(labelUltimoId);
         arriba.add(new JLabel(" | Solucionar ID:"));
         arriba.add(campo);
         arriba.add(matar);
         add(arriba, BorderLayout.NORTH);
 
-        // 2. Panel Lateral Derecha (Lista de Obstáculos)
+        // 2. Panel Lateral Derecha 
         panelObstaculos = new JPanel();
         panelObstaculos.setLayout(new BoxLayout(panelObstaculos, BoxLayout.Y_AXIS));
         JScrollPane scroll = new JScrollPane(panelObstaculos);
@@ -53,23 +65,23 @@ public class interfaz extends JFrame implements GameListener {
         // 3. Área Central de Juego (Donde corre el taxi)
         areaJuego = new JLayeredPane();
         areaJuego.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        areaJuego.setBackground(new Color(100, 100, 100)); // Color asfalto
+        areaJuego.setBackground(new Color(100, 100, 100));
         areaJuego.setOpaque(true);
         add(areaJuego, BorderLayout.CENTER);
 
         // --- Inicializar Componentes de Juego ---
         
-        // Crear y añadir al Taxista (el cuadrado amarillo)
+        // Crear y añadir al Taxista
         taxista = new Taxista();
         taxista.setBounds(300, 200, 30, 30); // Posición y tamaño inicial
-        // Añadir a la capa DEFAULT del LayeredPane
+        // Añadir a la capa DEFAULT 
         areaJuego.add(taxista, JLayeredPane.DEFAULT_LAYER);
 
         generador = new generador_obs(this);
 
         // Acciones
         matar.addActionListener(e -> accionarMatar());
-        campo.addActionListener(e -> accionarMatar()); // Enter en el campo también funciona
+        campo.addActionListener(e -> accionarMatar()); 
 
         // --- Iniciar Hilos ---
         // Hilo del generador de obstáculos
@@ -78,7 +90,7 @@ public class interfaz extends JFrame implements GameListener {
         new Thread(taxista).start();
         // Hilo para actualizar la label de memoria constantemente
         iniciarActualizadorMemoria();
-    }
+    } // <-- Aquí estaba el problema, faltaba cerrar el constructor y todo lo de arriba
     
     private void accionarMatar() {
         try {
@@ -96,22 +108,32 @@ public class interfaz extends JFrame implements GameListener {
             while (!sistema.isJuegoTerminado()) {
                 SwingUtilities.invokeLater(() -> {
                     labelMemoria.setText("Estrés Actual: " + sistema.memoria + " / 100");
-                    // Cambiar color según estrés
                     if (sistema.memoria < 30) labelMemoria.setForeground(Color.RED);
-                    else if (sistema.memoria < 60) labelMemoria.setForeground(new Color(255, 140, 0)); // Naranja
+                    else if (sistema.memoria < 60) labelMemoria.setForeground(new Color(255, 140, 0)); 
+                    else labelMemoria.setForeground(Color.BLUE);
+
+                    // Actualizar el estado del taxista en la UI
+                    if (sistema.hayBloqueo()) {
+                        labelEstadoTaxi.setText(" | Taxi: ¡BLOQUEADO!");
+                        labelEstadoTaxi.setForeground(Color.RED);
+                    } else {
+                        labelEstadoTaxi.setText(" | Taxi: Avanzando");
+                        labelEstadoTaxi.setForeground(new Color(0, 150, 0)); // Verde
+                    }
                 });
                 try { Thread.sleep(500); } catch (Exception e) {}
             }
         }).start();
     }
-
-    // Métodos existentes actualizados
+    
+    // Modifica ligeramente agregarBoton para actualizar el último ID
     public void agregarBoton(int id, String tipo) {
         SwingUtilities.invokeLater(() -> {
+            labelUltimoId.setText(" | Último ID: " + id); // NUEVO
+            
             JButton b = new JButton("ID " + id + " - " + tipo);
             b.setAlignmentX(Component.CENTER_ALIGNMENT);
             b.setMaximumSize(new Dimension(180, 30));
-            // Color según gravedad (opcional)
             if(tipo.equals("manifestacion")) b.setBackground(new Color(255, 200, 200));
             
             botones.put(id, b);
@@ -149,7 +171,7 @@ public class interfaz extends JFrame implements GameListener {
         // Crear el panel de GAME OVER
         JPanel panelGraveOver = new JPanel();
         panelGraveOver.setLayout(new BoxLayout(panelGraveOver, BoxLayout.Y_AXIS));
-        panelGraveOver.setBackground(new Color(0, 0, 0, 200)); // Negro semitransparente
+        panelGraveOver.setBackground(new Color(0, 0, 0, 200)); 
         panelGraveOver.setBounds(0, 0, areaJuego.getWidth(), areaJuego.getHeight());
 
         JLabel labelTitulo = new JLabel("GAME OVER");
@@ -168,7 +190,7 @@ public class interfaz extends JFrame implements GameListener {
         panelGraveOver.add(labelMensaje);
         panelGraveOver.add(Box.createVerticalGlue()); // Espaciador inferior
 
-        // Añadir al areaJuego en la capa DRAG (encima de todo)
+        
         areaJuego.add(panelGraveOver, JLayeredPane.DRAG_LAYER);
         areaJuego.revalidate();
         areaJuego.repaint();

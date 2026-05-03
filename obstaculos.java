@@ -1,5 +1,4 @@
 
-
 public class obstaculos implements Runnable {
 
     private int obs_id;
@@ -9,6 +8,7 @@ public class obstaculos implements Runnable {
 
     private boolean activo = true;
 
+    // Guarda el momento en que se crea el obstáculo
     public obstaculos(int obs_id, String obs_tipo, int obs_consumo) {
         this.obs_id = obs_id;
         this.obs_tipo = obs_tipo;
@@ -39,15 +39,14 @@ public class obstaculos implements Runnable {
     }
 
     public void run() {
-        // Consumimos memoria 
+        // Consumimos memoria
         System.out.println("Obstaculo " + obs_id + " (" + obs_tipo + ") bloqueando el paso.");
         sistema.usarMemoria(obs_consumo);
 
-        
         while (activo && !sistema.isJuegoTerminado()) {
             System.out.println("Obstaculo " + obs_id + " " + obs_tipo + " activo");
             try {
-                Thread.sleep(5000); 
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

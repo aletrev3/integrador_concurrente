@@ -1,34 +1,25 @@
 public class Main {
     public static void main(String[] args) {
-
-        // Iniciar interfaz del juego N
         interfaz ventana = new interfaz();
         ventana.setVisible(true);
 
         pruebadeclaseobstaculos();
-        pruebaGeneradorObs();
-        pruebaEntradaUsuario();
-
+        pruebaValidacionYMonitor();
     }
 
-<<<<<<< HEAD
     // Alejandra
     public static void pruebadeclaseobstaculos() {
-=======
-    //Alejandra
-    public static void pruebaObstaculos() {
->>>>>>> 548e64b3d29ef02731b9deb520fb199264864afe
         obstaculos obs = new obstaculos(1, "bache", 10);
-        new Thread(obs).start();
 
+        Thread hilo = new Thread(obs);
+        hilo.start();
         try {
-<<<<<<< HEAD
             Thread.sleep(6000);
         } catch (Exception e) {
         }
         obs.detener();
 
-        System.out.println("Prueba completada correctamente");
+        System.out.println("Prueba de obstaculos bien");
     }
 
     public static void pruebaGenerador() {
@@ -40,7 +31,6 @@ public class Main {
         System.out.println("Prueba de generador bien");
     }
 
-    // N
     public static void pruebaEntradaUsuario() {
         interfaz ventana = new interfaz();
         ventana.setVisible(true);
@@ -55,44 +45,21 @@ public class Main {
         System.out.println("Prueba de entrada de usuario bien");
     }
 
-=======
-            Thread.sleep(2000);
-        } catch (Exception e) {}
+   // Nayeli
+    public static void pruebaValidacionYMonitor() {
+        boolean pasoLibre = !sistema.hayBloqueo();
+        System.out.println("RF-02 Validación previa: " + pasoLibre);
 
-         System.out.println("Prueba de obstaculos bien");
-         System.exit(0);
-}
+        sistema.usarMemoria(10);
+        pasoLibre = !sistema.hayBloqueo();
+        System.out.println("RF-02 Validación bloqueado: " + pasoLibre);
+        sistema.liberarMemoria(10);
 
-    public static void pruebaGeneradorObs() {
-        generador_obs gen = new generador_obs();
-        Thread hiloGen = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            gen.generar();
+        boolean colapso = sistema.isJuegoTerminado();
+        System.out.println("RF-05 Monitor inicial: " + colapso);
+
+        sistema.usarMemoria(100);
+        colapso = sistema.isJuegoTerminado();
+        System.out.println("RF-05 Monitor Deadlock activado: " + colapso);
     }
-});
-            hiloGen.start();
-            try {
-                Thread.sleep(12000);
-            } catch (Exception e) {}
-
-            System.out.println("Prueba de generador_obs bien");
-                System.exit(0);
-    }
-
-
-    public static void pruebaEntradaUsuario() {
-        interfaz ventana = new interfaz();
-        ventana.setVisible(true);
-
-        System.out.println("Escribe un id y presiona Enter para probar la entrada.");
-
-        try {
-            Thread.sleep(10000); 
-        } catch (Exception e) {}
-
-        System.out.println("Prueba de entrada de usuario bien");
-}
-
->>>>>>> 548e64b3d29ef02731b9deb520fb199264864afe
 }

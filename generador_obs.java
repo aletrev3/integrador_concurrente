@@ -8,33 +8,6 @@ public class generador_obs {
         Random random = new Random();
         int contadorId = 1;
 
-
-        
-        while (!sistema.isJuegoTerminado()) {
-            String tipo = tipos[random.nextInt(tipos.length)];
-
-            int consumo = random.nextInt(15) + 5;
-            if (tipo.equals("manifestacion"))
-                consumo = 30;
-
-            obstaculos obs = new obstaculos(contadorId, tipo, consumo);
-            mapa.put(contadorId, obs);
-
-            Thread hilo = new Thread(obs);
-            hilo.start();
-
-            ventana.agregarBoton(contadorId, tipo);
-
-            contadorId++;
-
-            try {
-                
-                Thread.sleep(2000);
-            } catch (Exception e) {
-                e.printStackTrace(); 
-            }
-        }
-
         while (true) {
             String tipo = tipos[random.nextInt(tipos.length)];
             int obs_id = contadorId;

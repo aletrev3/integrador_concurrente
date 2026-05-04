@@ -15,6 +15,7 @@ public class generador_obs {
         Random random = new Random();
         int contadorId = 1;
 
+<<<<<<< HEAD
         
         while (!sistema.isJuegoTerminado()) {
             String tipo = tipos[random.nextInt(tipos.length)];
@@ -40,6 +41,8 @@ public class generador_obs {
                 e.printStackTrace(); 
             }
         }
+=======
+>>>>>>> 013abbd8a125f83ec86e2c24319cd1a5b373c85b
         System.out.println("Generador de obstáculos detenido.");
     }
 

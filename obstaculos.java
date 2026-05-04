@@ -1,23 +1,26 @@
 public class obstaculos implements Runnable {
+
     private int obs_id;
     private String obs_tipo;
     private int obs_consumo;
+    private long tiempoCreacion;
 
+    private boolean activo = true;
+
+    // Guarda el momento en que se crea el obstáculo
     public obstaculos(int obs_id, String obs_tipo, int obs_consumo) {
         this.obs_id = obs_id;
         this.obs_tipo = obs_tipo;
         this.obs_consumo = obs_consumo;
+        this.tiempoCreacion = System.currentTimeMillis();
     }
 
-private boolean activo = true;
+    public int getId() {
+        return obs_id;
+    }
 
-public void run() {
-    while (activo) {
-        System.out.println("Obstaculo " + obs_id + obs_tipo + " activo");
-
-<<<<<<< HEAD
-    public long getTiempoCreacion() {
-        return tiempoCreacion;
+    public String getTipo() {
+        return obs_tipo;
     }
 
     public boolean estaActivo() {
@@ -49,9 +52,5 @@ public void run() {
         }
 
         System.out.println("Obstaculo " + obs_id + " terminado");
-=======
->>>>>>> 548e64b3d29ef02731b9deb520fb199264864afe
     }
-}
-
 }

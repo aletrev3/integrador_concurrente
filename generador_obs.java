@@ -1,7 +1,8 @@
 
-import java.util.*;
+import java.util.Random;
 
 public class generador_obs {
+<<<<<<< HEAD
     private interfaz ventana;
     private Map<Integer, obstaculos> mapa = new HashMap<>();
 
@@ -10,15 +11,25 @@ public class generador_obs {
     }
 
     // Nayeli
+=======
+>>>>>>> 548e64b3d29ef02731b9deb520fb199264864afe
     public void generar() {
-        String[] tipos = { "choque", "bache", "manifestacion", "construccion" };
+        String[] tipos = {"choque", "bache", "manifestacion", "construccion"};
         Random random = new Random();
         int contadorId = 1;
 
+<<<<<<< HEAD
         while (!sistema.isJuegoTerminado()) {
 
+=======
+        while (true) {
+>>>>>>> 548e64b3d29ef02731b9deb520fb199264864afe
             String tipo = tipos[random.nextInt(tipos.length)];
+            int obs_id = contadorId;
+            String obs_tipo = tipo;
+            int obs_consumo = random.nextInt(100) + 1;
 
+<<<<<<< HEAD
             int consumo = random.nextInt(15) + 5;
 
             if (tipo.equals("manifestacion")) {
@@ -48,22 +59,19 @@ public class generador_obs {
         }
 
         System.out.println("Generador de obstáculos detenido.");
-    }
+=======
+            obstaculos obs_1 = new obstaculos(obs_id, obs_tipo, obs_consumo);
 
-    public void matarPorId(int id) {
-        obstaculos obs = mapa.get(id);
+            Thread hilo = new Thread(obs_1);
+            hilo.start();
 
-        if (obs == null) {
-            ventana.mostrar("No existe ese ID");
-            return;
+            contadorId++;
+                    try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-
-        if (!obs.estaActivo()) {
-            ventana.mostrar("Ya estaba muerto");
-            return;
         }
-
-        obs.detener();
-        ventana.marcarMuerto(id);
+>>>>>>> 548e64b3d29ef02731b9deb520fb199264864afe
     }
 }

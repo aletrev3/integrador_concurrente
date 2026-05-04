@@ -24,6 +24,10 @@ public class obstaculos implements Runnable {
         return obs_tipo;
     }
 
+    public long getTiempoCreacion() {
+        return tiempoCreacion;
+    }
+
     public boolean estaActivo() {
         return activo;
     }

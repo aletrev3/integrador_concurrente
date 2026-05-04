@@ -1,4 +1,3 @@
-package proyecto_integrador;
 
 import java.util.*;
 
@@ -10,39 +9,44 @@ public class generador_obs {
         this.ventana = ventana;
     }
 
+    // Nayeli
     public void generar() {
         String[] tipos = { "choque", "bache", "manifestacion", "construccion" };
         Random random = new Random();
         int contadorId = 1;
 
-<<<<<<< HEAD
-        
         while (!sistema.isJuegoTerminado()) {
+
             String tipo = tipos[random.nextInt(tipos.length)];
 
             int consumo = random.nextInt(15) + 5;
-            if (tipo.equals("manifestacion"))
-                consumo = 30;
 
-            obstaculos obs = new obstaculos(contadorId, tipo, consumo);
+            if (tipo.equals("manifestacion")) {
+                consumo = 30;
+            }
+            obstaculos obs = new obstaculos(
+                    contadorId,
+                    tipo,
+                    consumo);
+
             mapa.put(contadorId, obs);
 
             Thread hilo = new Thread(obs);
             hilo.start();
 
-            ventana.agregarBoton(contadorId, tipo);
+            ventana.agregarBoton(
+                    contadorId,
+                    tipo);
 
             contadorId++;
 
             try {
-                
-                Thread.sleep(2000);
+                Thread.sleep(4000);
             } catch (Exception e) {
-                e.printStackTrace(); 
+                e.printStackTrace();
             }
         }
-=======
->>>>>>> 013abbd8a125f83ec86e2c24319cd1a5b373c85b
+
         System.out.println("Generador de obstáculos detenido.");
     }
 

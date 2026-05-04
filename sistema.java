@@ -53,6 +53,6 @@ public class sistema {
 
     // NUEVO: Método para que el taxista pregunte si puede avanzar
     public synchronized static boolean hayBloqueo() {
-        return obstaculosActivos > 3;
+        return obstaculosActivos > 0;
     }
 }
